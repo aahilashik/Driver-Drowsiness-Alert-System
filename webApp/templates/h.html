@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Audio</title>
+</head>
+<body>
+
+  <script type="text/javascript">
+  
+	
+	  
+    setTimeout(function(){
+      
+      var audio = new Audio("Z:\Python\Final Year Project - Driver Drowsiness Detector\webApp\static\audio\alarm.wav");
+	  audio.play();
+      
+	  console.log('your audio is started just now');
+    }, 10000)
+  </script>
+</body>
+</html>
+
+
+					<script>
+						setInterval(() => {
+								fetch("{{ url_for('update_driver_details') }}")
+								.then(response => {
+										response.text().then(t => {
+										})
+									});
+								}, 20000); 
+					</script>

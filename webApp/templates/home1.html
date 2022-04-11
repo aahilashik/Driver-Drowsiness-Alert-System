@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>Home - Dashboard</title>
+
+	<link rel = "icon" href = "https://cdn0.iconfinder.com/data/icons/cybernetics-outline/60/016_-_Cybernetic_Eye-512.png" type = "image/x-icon">
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var maxField = 10;
+			var addButton = $('.add_button'); 
+			var wrapper = $('.field_wrapper');
+			var fieldHTML = '<div class="row"><input class="form-control col-sm-9" style="margin-top:1%;margin-left:auto;" type="text" name="suggestions"><a style="width:6%;margin-top:1%;margin-left:auto;color:#ff2277;" href="javascript:void(0);" class="remove_button">x</a></div>';
+			var x = 1;
+
+			$(addButton).click(function(){
+				if(x < maxField){
+					x++;
+					$(wrapper).append(fieldHTML);
+				}
+			});
+
+			$(wrapper).on('click', '.remove_button', function(e){
+				e.preventDefault();
+				$(this).parent('div').remove();
+				x--;
+			});
+		});
+	</script>
+
+	
+</head>
+
+
+<style>
+
+	body {
+		background: url('../static/road.jpg');
+		background-repeat: no-repeat;
+		background-color: #cccccc;
+		background-size: cover;
+		background-attachment: fixed;
+		background-position: center;
+	}
+	h1 {
+	  text-align: center;
+	  color:#dfdfdf;
+	}
+	.loader{
+	  position: fixed;
+	  left: 0px;
+	  top: 0px;
+	  width: 100%;
+	  height: 100%;
+	  z-index: 9999;
+	  background: url('../static/load1.gif') 
+				  50% 50% no-repeat rgba(255, 255, 255, 0.4);
+	}
+	.display{
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+	.specific {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+  
+</style>
+					
+
+<body>
+
+	<audio id="alarm_audio" loop>
+		<source src="{{ url_for("static", filename = "audio/alarm.wav") }}" type="audio/wav">
+		Your browser does not support the audio element.
+	</audio>
+
+	<div class="loader" id="img" style="display:none;"></div>
+	<br>
+	
+	<div class="specific" style="max-width:960px;margin:auto;width:96%;color:#dfdfdf;border-radius: 20px;">
+		
+		<br>
+		<div class="display" style="margin:auto;width:96%;border-radius:10px;">
+			<br> 
+			<h1>Drowsiness Alert System</h1> 
+			<br> 
+		</div>
+		<br>
+		
+
+		<div class="display" style="margin:auto;width:96%;border-radius: 10px;">
+			<br>
+			
+				<div class="form-group row" style="">			
+				
+					<div class="row" style="width:100%;">
+						<div class="" style="width:76%;margin-left:4%;display:flex;justify-content:space-between;"><h3 style="margin:auto;">Live Video Feed</h3></div>
+						<div class="" style="width:20%;display:flex;justify-content:space-between;"><h3 style="margin:auto;">Options</h3></div>
+					</div>
+					
+					<img style="width:76%;margin-top:2%;margin-left:4%;border-radius: 8px;" src="{{ url_for('video_feed') }}" >
+					
+					
+					<!-- Trigger the modals with a buttons -->
+					<div class="form-group row" style="width:14%;margin-left:2%;margin-top:2%;">
+						
+						<button type="button" style="width:100%;margin-top:auto;margin-bottom:auto;" class="btn btn-outline-warning btn-lg btn-block" data-toggle="modal" data-target="#details">Driver Details</button>
+						<button type="button" style="width:100%;margin-top:auto;margin-bottom:auto;display:none;" class="btn btn-outline-warning btn-lg btn-block" data-toggle="modal" data-target="#status" id="alert_system">Alert System</button>
+						<button type="button" style="width:100%;margin-top:auto;margin-bottom:auto;" class="btn btn-outline-warning btn-lg btn-block" data-toggle="modal" data-target="#settings">Settings</button>
+						<button type="button" style="width:100%;margin-top:auto;margin-bottom:auto;" class="btn btn-outline-danger  btn-lg btn-block" data-toggle="modal" data-target="#logout" id="LOGOUT">Close</button>
+						
+					
+					</div>
+					<!-- Trigger the modals with a buttons -->
+						
+						
+					<!-- Start of Modal -->
+					<div id="details" class="modal fade" tabindex="-1">
+					  <div class="modal-dialog modal-lg">
+						<div class="modal-content" style="color:#34495e;">
+						  <div class="modal-header">
+							<h5 class="modal-title">Driver Details</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body row" style="display: flex;align-items: center;justify-content: center;">
+							<img id="dImg" src="https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg" style="margin-left:2%;" width="200" height="200">
+							<div style="width:68%;margin-left:4%;margin-top:4%;" >
+							  <div class="form-group row">
+								<label for="dName" class="col-sm-2 col-form-label">Name</label>
+								<div class="col-sm-8">
+								  <input type="text" readonly class="form-control" id="dName" value="">
+								</div>
+							  </div>
+							  <div class="form-group row">
+								<label for="dAddress" class="col-sm-2 col-form-label">Address</label>
+								<div class="col-sm-8">
+								  <input type="text" readonly class="form-control" id="dAddress" value="">
+								</div>
+							  </div>
+							  <div class="form-group row">
+								<label for="dPhone" class="col-sm-2 col-form-label">Phone</label>
+								<div class="col-sm-8">
+								  <input type="text" readonly class="form-control" id="dPhone" value="">
+								</div>
+							  </div>
+							  <div class="form-group row">
+								<label for="dEmail" class="col-sm-2 col-form-label">Email</label>
+								<div class="col-sm-8">
+								  <input type="text" readonly class="form-control" id="dEmail" value="">
+								</div>
+							  </div>
+							</div>
+						  </div>
+						  <div class="modal-footer"><a href="javascript:;" data-dismiss="modal" class="btn btn-secondary btn-block">Close</a></div>
+						</div>
+					  </div>
+					</div>
+					
+					
+					<div id="status" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1">
+					  <div class="modal-dialog">
+						<div class="modal-content" style="color:#34495e;">
+						  <div class="modal-header">
+							<h5 class="modal-title">Check</h5>
+						  </div>
+
+						  <div class="modal-body"><i class="fa"></i><h3> Press the button with a number {{ random }} </h3></div>
+						  
+						  <div class="modal-body row"><i class="fa"></i><h5 style="width:44%;margin-left:3%;text-align:right;"> Countdown : </h5><h5 id="countdown" style="width:44%;margin-left:3%;text-align:left;"></h5></div>
+						  
+						  <div class="row" style="width:96%;margin-left:2%;">
+							
+							{% for number in range(1, 7) %}
+									
+								{% if loop.index == random %}
+									<div class="modal-footer" style="width:46%;margin-left:2%;"><form method="post" style="width:96%;"><button type="submit" name="check_button" class="btn btn-primary btn-block">{{ number }}</button></form></div>
+									<!-- <button type="submit" class="btn btn-primary btn-block" style="width:96%;margin-left:2%;" name="check_button">{{ number }}</button> -->
+								{% else %}
+									<div class="modal-footer" style="width:46%;margin-left:2%;"><button type="button" class="btn btn-primary btn-block">{{ number }}</button></div>
+									<!-- <button type="button" class="btn btn-primary btn-block" style="width:96%;margin-left:2%;">{{ number }}</button> -->
+								{% endif %}
+								
+							{% endfor %}
+						  
+						  </div>
+						  
+						  
+
+						</div>
+					  </div>
+					</div>
+					
+					<script>
+						function getName(array){
+							if(array.length == 0)
+								return null;
+							var modeMap = {};
+							var maxEl = array[0], maxCount = 1;
+							for(var i = 0; i < array.length; i++)
+							{
+								var el = array[i];
+								if(modeMap[el] == null)
+									modeMap[el] = 1;
+								else
+									modeMap[el]++;  
+								if(modeMap[el] > maxCount)
+								{
+									maxEl = el;
+									maxCount = modeMap[el];
+								}
+							}
+							return maxEl;
+						}
+						var driverList = {{ driverList|tojson }};
+						var nameArray = [];
+						var name = "";
+						setInterval(() => {
+							fetch("{{ url_for('name_feed') }}")
+							.then(response => { response.text().then(t => {name = t}) });
+							if ( nameArray.length >= 1 ){
+								nameArray.shift();
+							}
+							nameArray.push(name);
+							for (index in driverList){
+								if (getName(nameArray) == driverList[index][0]){
+									document.getElementById("dName").value 		= driverList[index][1];
+									document.getElementById("dAddress").value 	= driverList[index][2];
+									document.getElementById("dPhone").value 	= driverList[index][3];
+									document.getElementById("dEmail").value 	= driverList[index][4];
+									document.getElementById("dImg").src 		= driverList[index][5];
+									break;
+								}
+							}
+						}, 10000); 
+					</script>
+					
+					
+					<div id="settings" class="modal fade" tabindex="-1">
+					  <div class="modal-dialog  modal-lg">
+						<div class="modal-content" style="color:#34495e;">
+						  <div class="modal-header">
+							<h5 class="modal-title">Settings</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  
+						  <form method="post">
+							  <div class="modal-body">
+									<div class="row">
+									
+										<div class="row" style="width:100%;margin-top:1%;"><label style="width:92%;margin-left:auto"> Countdown Time (in seconds) </label></div>
+										<div class="" style="width:30%;text-align:right;"><label style="margin-top:1%;width:92%;margin-left:auto">When Drowsy Detected : </label></h2></div>
+										<div class="" style="width:70%;text-align: left;"><input class="form-control col-sm-9" style="margin-top:1%;margin-left:2%;" type="text" name="time_drowsy" value="{{time_drowsy}}" required></div>
+										<div class="" style="width:30%;text-align:right;"><label style="margin-top:1%;width:92%;margin-left:auto">When Slept Detected : </label></h2></div>
+										<div class="" style="width:70%;text-align: left;"><input class="form-control col-sm-9" style="margin-top:1%;margin-left:2%;" type="text" name="time_slept" value="{{time_slept}}" required></div>
+
+										<div class="row" style="width:100%;display:none;margin-top:1%;">
+									
+											<label style="width:92%;margin-left:auto">Suggestions</label>
+											<div class="field_wrapper" style="width:100%;">
+		 										{% for suggestion in Suggestions %}
+													<div class="row">
+														<input class="form-control col-sm-9" style="margin-top:1%;margin-left:auto;" type="text" name="suggestions" value="{{suggestion}}" required>
+														{% if loop.index == 1 %}
+															<a href="javascript:void(0);" class="add_button" style="width:6%;margin-top:1%;margin-left:auto;" title="Add field">+</a>
+														{% else %}
+															<a style="width:6%;margin-top:1%;margin-left:auto;color:#ff2277;" href="javascript:void(0);" class="remove_button">x</a>
+														{% endif %}
+													</div>
+												{% endfor %}									
+											</div>
+										
+										</div>
+									</div>
+										
+							  </div>
+							  
+							  <div class="modal-footer">
+								<form method="post" action="/">
+									<button type="submit" name="submit_button" class="btn btn-success">Save changes</button>
+								</form>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							  </div>
+						  </form>
+						  
+						</div>
+					  </div>
+					</div>
+					
+					
+					<div id="logout" class="modal fade" tabindex="-1">
+					  <div class="modal-dialog">
+						<div class="modal-content" style="color:#34495e;">
+						  <div class="modal-header">
+							<h5 class="modal-title">Close</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body"><i class="fa"></i> Are you sure you want to close this window? </div>
+						  <div class="modal-footer"><button type="button" class="btn btn-danger btn-block" onclick="windowClose();">Quit</button></div>
+						</div>
+					  </div>
+					</div>
+					<!-- End of Modal -->
+					
+					
+					<div class="row" style="width:100%;margin-top:2%;">
+						<div class="" style="width:50%;text-align:right;"><h2 style="margin:auto;">Status :&nbsp;</h2></div>
+						<div class="" style="width:50%;text-align: left;"><h2 style="margin:auto;" id="state">NA</h2></div>
+						<script>
+							var state = document.getElementById("state");
+							var states = [];
+							var flag = 1;
+							
+							setInterval(() => {
+								fetch("{{ url_for('state_feed') }}")
+								.then(response => {
+										response.text().then(t => {
+																	if ( flag ){
+																		if ( states.length >= 6 ){
+																			states.shift();
+																		}
+																		states.push(t);
+																		state.innerHTML = t;
+																		
+																		if (states.slice(-4,).toLocaleString() == "Drowsy,Drowsy,Drowsy,Drowsy"){
+																			flag = 0;
+																			document.getElementById("alert_system").click();
+																			var alarmVar = setTimeout(function () {
+																					document.getElementById("alarm_audio").play();
+																				}, ({{ time_drowsy }} + 1)*1000 );
+																			var count = {{ time_drowsy }};
+																			flag = 0;
+																			var counter = setInterval( function(){
+																				document.getElementById("countdown").innerHTML = count--;
+																				if (count == -1){
+																					clearInterval(counter);
+																				}
+																			}, 1000);
+																		} else if (states.slice(-4,).toLocaleString() == "Slept,Slept,Slept,Slept"){
+																			flag = 0;
+																			document.getElementById("alert_system").click();
+																			var alarmVar = setTimeout(function () {
+																					document.getElementById("alarm_audio").play();
+																				}, ({{ time_slept }} + 1)*1000 );
+																			var count = {{ time_slept }};
+																			flag = 0;
+																			var counter = setInterval( function(){
+																				document.getElementById("countdown").innerHTML = count--;
+																				if (count == -1){
+																					clearInterval(counter);
+																				}
+																			}, 1000);
+																		}
+																	}
+																})
+									});
+								}, 1500); 
+						</script>
+					</div>
+					
+					
+					<script language="javascript" type="text/javascript">
+						function windowClose() {
+						window.open('','_parent','');
+						window.close();
+						}
+					</script>
+					
+				</div>
+			<br>
+		</div>		
+		<br>
+	</div>
+	<br>
+		
+	
+</body>
+</html>
+
